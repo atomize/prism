@@ -165,7 +165,7 @@
 		###### <h6>
 		### Below is a list
 		* Item 1
-			* * Item 1.1
+		* * Item 1.1
 		* Item 2
 		* Item 3
 		There is a bug in Snarkdown that wont allow a blockquote underneath anything but a plain text line.
