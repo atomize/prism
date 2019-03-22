@@ -889,7 +889,7 @@ Prism.languages.js = Prism.languages.javascript;
 	 */
 	function loadFile(src, cb) {
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", src, true);
+		xhr.open('GET', src, true);
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState == 4) {
 				/** @type {LoadResult} */
@@ -959,8 +959,10 @@ Prism.languages.js = Prism.languages.javascript;
 				} else if (start < 0) {
 					start += lines.length; // slice can handle negatives but data-start cannot.
 				}
-				if (end < 0) {
-					end += lines.length + 1;
+				if (end === -1) {
+					end = lines.length;
+				} else if (end < 0) {
+					end++;
 				}
 
 				text = lines.slice(start, end).join('\n');
