@@ -77,7 +77,7 @@
 				return str;
 			}
 
-			md = md.replace(/^\[(.+?)\]:\s*(.+)$/gm, (s, name, url) => {
+			md = md.replace(/^\[(.+?)\]:\s*(.+)$/gm,function(s, name, url) {
 				links[name.toLowerCase()] = url;
 				return '';
 			}).replace(/^\n+|\n+$/g, '');
