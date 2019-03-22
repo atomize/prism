@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8" />
+	<link rel="icon" href="favicon.png" />
+	<title>Tutorial from Comments ▲ Prism plugins</title>
+	<base href="../.." />
+	<link rel="stylesheet" href="style.css" />
+	<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+	<link rel="stylesheet" href="plugins/toolbar/prism-toolbar.css" data-noprefix />
+	<link rel="stylesheet" href="plugins/line-numbers/prism-line-numbers.css" data-noprefix />
+
+	<script src="scripts/prefixfree.min.js"></script>
+	<script>
+		var _gaq = [
+			['_setAccount', 'UA-33746269-1'],
+			['_trackPageview']
+		];
+	</script>
+	<script src="https://www.google-analytics.com/ga.js" async></script>
+<style>
+li {
+	padding: unset !important;
+}
+</style>
+</head>
+
+<body>
+
+	<header>
+		<div class="intro" data-src="templates/header-plugins.html" data-type="text/html"></div>
+		<h2>Tutorial from Comments</h2>
+		<p>Generates a code tutorial from comments written in Markdown</p>
+	</header>
+
+	<section>
+		<pre data-src="plugins/data-tutorial/prism-tutorial.js" class="line-numbers" data-tutorial="docmd"></pre>
+	</section>
+
+	<footer data-src="templates/footer.html" data-type="text/html"></footer>
+
+	<script src="prism.js"></script>
+	<!-- The File Highlight plugin is already included into Prism.js build -->
+	<script src="plugins/line-numbers/prism-line-numbers.min.js"></script>
+	<script src="plugins/data-tutorial/prism-tutorial.js"></script>
+	<script src="scripts/utopia.js"></script>
+	<script src="components.js"></script>
+	<script src="scripts/code.js"></script>
+
+</body>
+
+</html>

@@ -951,6 +951,11 @@
 			"owner": "dvkndn",
 			"noCSS": true
 		},
+		"data-tutorial": {
+			"title": "Tutorial from Comments",
+			"noCSS": true,
+			"owner": "atomize"
+		},
 		"file-highlight": {
 			"title": "File Highlight",
 			"noCSS": true
