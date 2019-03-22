@@ -30,7 +30,7 @@
 		### Snarkdown is a single function parser that minifies just under 2kb. 
 		That's just small enough to build in to solutions like this. **Note:** Snarkdown does not support tables!
 		docmd*/
-		const TAGS = {
+		var TAGS = {
 			'': ['<em>', '</em>'],
 			_: ['<strong>', '</strong>'],
 			'~': ['<s>', '</s>'],
@@ -55,7 +55,7 @@
 
 		/** Parse Markdown into an HTML String. */
 		function parse(md, prevLinks) {
-			let tokenizer = /((?:^|\n+)(?:\n---+|\* \*(?: \*)+)\n)|(?:^``` *(\w*)\n([\s\S]*?)\n```$)|((?:(?:^|\n+)(?:\t|  {2,}).+)+\n*)|((?:(?:^|\n)([>*+-]|\d+\.)\s+.*)+)|(?:\!\[([^\]]*?)\]\(([^\)]+?)\))|(\[)|(\](?:\(([^\)]+?)\))?)|(?:(?:^|\n+)([^\s].*)\n(\-{3,}|={3,})(?:\n+|$))|(?:(?:^|\n+)(#{1,6})\s*(.+)(?:\n+|$))|(?:`([^`].*?)`)|(  \n\n*|\n{2,}|__|\*\*|[_*]|~~)/gm,
+			var tokenizer = /((?:^|\n+)(?:\n---+|\* \*(?: \*)+)\n)|(?:^``` *(\w*)\n([\s\S]*?)\n```$)|((?:(?:^|\n+)(?:\t|  {2,}).+)+\n*)|((?:(?:^|\n)([>*+-]|\d+\.)\s+.*)+)|(?:\!\[([^\]]*?)\]\(([^\)]+?)\))|(\[)|(\](?:\(([^\)]+?)\))?)|(?:(?:^|\n+)([^\s].*)\n(\-{3,}|={3,})(?:\n+|$))|(?:(?:^|\n+)(#{1,6})\s*(.+)(?:\n+|$))|(?:`([^`].*?)`)|(  \n\n*|\n{2,}|__|\*\*|[_*]|~~)/gm,
 				context = [],
 				out = '',
 				links = prevLinks || {},
@@ -72,7 +72,7 @@
 			}
 
 			function flush() {
-				let str = '';
+				var str = '';
 				while (context.length) str += tag(context[context.length - 1]);
 				return str;
 			}
