@@ -9,10 +9,10 @@
 	>
 	>
 	And a multiline comment in Javascript would like like:
-	docmd*/
+	ENDdocmd*/
 	/*tutorial
 	# I am an h1
-	tutorial*/
+	ENDtutorial*/
 	//docmd ## Here is this plugins code:
 	(function () {
 		if (typeof self === 'undefined' || !self.Prism || !self.document || !document.querySelector) {
@@ -23,13 +23,16 @@
 		var commentArr = []
 
 		var dataStarts = function (text) {
-			return findDataStarts(text.trim(), new RegExp('^[^A-Z^a-z]+[^\s+A-Za-z]' + tutSep, 'gm'))
+			return findDataStarts(text.trim(), new RegExp('^[^A-Z^a-z]+[^\s+' + tutSep + ']' + tutSep, 'm'))
 		}
 		/*docmd 
 		## Built-in Markdown Parser: [Snarkdown](https://github.com/developit/snarkdown)
 		### Snarkdown is a single function parser that minifies just under 2kb. 
-		That's just small enough to build in to solutions like this. **Note:** Snarkdown does not support tables!
-		docmd*/
+		That's just small enough to build in to solutions like this. 
+		>
+		>
+		**Note:** Snarkdown does not support tables!
+		ENDdocmd*/
 		var TAGS = {
 			'': ['<em>', '</em>'],
 			_: ['<strong>', '</strong>'],
@@ -39,21 +42,14 @@
 			'-': ['<hr />']
 		};
 
-		/** Outdent a string based on the first indented line's leading whitespace
-		 *	@private
-		 */
 		function outdent(str) {
 			return str.replace(RegExp('^' + (str.match(/^(\t| )+/) || '')[0], 'gm'), '');
 		}
 
-		/** Encode special attribute characters to HTML entities in a String.
-		 *	@private
-		 */
 		function encodeAttr(str) {
 			return (str + '').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 		}
 
-		/** Parse Markdown into an HTML String. */
 		function parse(md, prevLinks) {
 			var tokenizer = /((?:^|\n+)(?:\n---+|\* \*(?: \*)+)\n)|(?:^``` *(\w*)\n([\s\S]*?)\n```$)|((?:(?:^|\n+)(?:\t|  {2,}).+)+\n*)|((?:(?:^|\n)([>*+-]|\d+\.)\s+.*)+)|(?:\!\[([^\]]*?)\]\(([^\)]+?)\))|(\[)|(\](?:\(([^\)]+?)\))?)|(?:(?:^|\n+)([^\s].*)\n(\-{3,}|={3,})(?:\n+|$))|(?:(?:^|\n+)(#{1,6})\s*(.+)(?:\n+|$))|(?:`([^`].*?)`)|(  \n\n*|\n{2,}|__|\*\*|[_*]|~~)/gm,
 				context = [],
@@ -77,7 +73,7 @@
 				return str;
 			}
 
-			md = md.replace(/^\[(.+?)\]:\s*(.+)$/gm,function(s, name, url) {
+			md = md.replace(/^\[(.+?)\]:\s*(.+)$/gm, function (s, name, url) {
 				links[name.toLowerCase()] = url;
 				return '';
 			}).replace(/^\n+|\n+$/g, '');
@@ -88,13 +84,7 @@
 				chunk = token[0];
 				if (prev.match(/[^\\](\\\\)*\\$/)) {
 					// escaped
-				}
-				// Code/Indent blocks:
-				/* else if (token[3] || token[4]) {
-					chunk = '<pre class="code ' + (token[4] ? 'poetry' : token[2].toLowerCase()) + '">' + outdent(encodeAttr(token[3] || token[4]).replace(/^\n+|\n+$/g, '')) + '</pre>';
-				} */
-				// > Quotes, -* lists:
-				else if (token[6]) {
+				} else if (token[6]) {
 					t = token[6];
 					if (t.match(/\./)) {
 						token[5] = token[5].replace(/^\d+/gm, '');
@@ -142,6 +132,7 @@
 		function $$(expr, con) {
 			return Array.prototype.slice.call((con || document).querySelectorAll(expr));
 		}
+
 		//docmd ## Another inline comment but now an h2.
 		function findDataStarts(text, splitter) {
 			var indexes = [];
@@ -176,7 +167,7 @@
 		>
 		>
 		See how I was separated by a blockquote?
-		docmd*/
+		ENDdocmd*/
 		Prism.hooks.add('before-sanity-check', function (env) {
 			var tutorialElement = env.element.parentNode.getAttribute('data-tutorial')
 			tutSep = tutorialElement
@@ -204,25 +195,19 @@
 				var thisTUT = tutSep
 				var pre = env.element.parentNode;
 				var lineNumTest = dataStarts(env.code)
-				if (commentArr.length < lineNumTest.length) {
-					commentArr.push(1)
-				}
 				var sum = lineNumTest.map(function (num, idx) {
 					return num + commentArr[idx];
 				});
-				if (commentArr.length < lineNumTest.length) {
-					commentArr.push(1)
-				}
 				var splitCode = env.highlightedCode.split(/<remove.*>|%<\/remove>/)
 				var x = 1;
 				splitCode.forEach(function (els) {
 					if (els.match(/^%/)) {
 						var codeEl = document.createElement('div')
-						var regContent = els.replace(new RegExp('^%.*' + thisTUT + '|' + thisTUT + '[^A-Z^a-z].*$', 'gm'), '')
+						var regContent = els.replace(new RegExp('^%.*' + thisTUT + '|.*' + thisTUT + '[^A-Z^a-z].*$', 'gm'), '')
 							.replace(/^\s|\s*$/gm, "")
+							.replace(/\n\s*\n/gm, '\n')
 							.replace(/^\s|\s*$/gm, "")
-						var mdContent = parse(regContent.trim())
-						codeEl.innerHTML = mdContent
+						codeEl.innerHTML = parse(regContent.trim())
 						pre.before(codeEl)
 					} else {
 						if (!els.trim()) {
@@ -232,7 +217,7 @@
 						var codeNode = document.createElement('code')
 						preEl.className += "line-numbers language-" + env.language
 						preEl.setAttribute('data-start', parseInt(sum[x - 1], 10))
-						els = els.replace(/^\s|\s*$/g, "");
+						els = els.replace(/^\s|\s*$/gm, "");
 						codeNode.innerHTML = els
 						preEl.appendChild(codeNode)
 						pre.before(preEl)

@@ -13,18 +13,13 @@
 	<link rel="stylesheet" href="plugins/line-numbers/prism-line-numbers.css" data-noprefix />
 
 	<script src="scripts/prefixfree.min.js"></script>
-	<script>
-		var _gaq = [
-			['_setAccount', 'UA-33746269-1'],
-			['_trackPageview']
-		];
-	</script>
+
 	<script src="https://www.google-analytics.com/ga.js" async></script>
-<style>
-li {
-	padding: unset !important;
-}
-</style>
+	<style>
+		li {
+			padding: unset !important;
+		}
+	</style>
 </head>
 
 <body>
@@ -36,7 +31,9 @@ li {
 	</header>
 
 	<section>
-		<pre data-src="plugins/data-tutorial/prism-tutorial.js" class="line-numbers" data-tutorial="docmd"></pre>
+		<pre data-src="plugins/data-tutorial/prism-data-tutorial.js" class="line-numbers" data-tutorial="docmd"></pre>
+		<p>And here is the plugin code without data-tutorial, so you can see all the Markdown comments!</p>
+		<pre data-src="plugins/data-tutorial/prism-data-tutorial.js" class="line-numbers"></pre>
 	</section>
 
 	<footer data-src="templates/footer.html" data-type="text/html"></footer>
@@ -44,7 +41,7 @@ li {
 	<script src="prism.js"></script>
 	<!-- The File Highlight plugin is already included into Prism.js build -->
 	<script src="plugins/line-numbers/prism-line-numbers.min.js"></script>
-	<script src="plugins/data-tutorial/prism-tutorial.js"></script>
+	<script src="plugins/data-tutorial/prism-data-tutorial.js"></script>
 	<script src="scripts/utopia.js"></script>
 	<script src="components.js"></script>
 	<script src="scripts/code.js"></script>
